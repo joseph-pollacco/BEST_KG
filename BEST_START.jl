@@ -483,7 +483,7 @@ function START_BEST()
 
 	#= =============== PREPERARING PLOTTING & TABLES =============== =#
 	if option.Plot.WRC_Kunsat
-		iMax = 1000
+		iMax = 5000
 
 		Diffusivity_Kg= Array{Float64}(iMax)
 		DθDh_Kg=Array{Float64}(iMax)
@@ -525,7 +525,7 @@ function START_BEST()
 
 		# Plotting characteristic and unsaturated curves
 
-		Se = linspace(0.001,0.999, iMax) # Range of Se
+		Se = linspace(0.001,1., iMax) # Range of Se
 		for i in 1:iMax
 			θ = wrc.se.Se_2_θ(Se[i], θs[iS], θr[iS])
 
