@@ -1,8 +1,13 @@
    
-    #= =============== Se =============== =#
+ DIR_Working = pwd() # Saving the current working directory
+ push!(LOAD_PATH, DIR_Working) # All the subroutines are in the current working directory
+ include("Cst.jl")  
+   #= =============== Se =============== =#
 module wrc
+
+
     module se
-        using cst
+        # using cst
         export  θ_2_Se, Se_2_θ
 
         function θ_2_Se(θ, θs, θr=0.)
@@ -23,7 +28,7 @@ module wrc
 
 	#= =============== KOSUGI =============== =#
     module kg
-        using cst, SpecialFunctions, wrc
+        using  SpecialFunctions
         export H_2_Se, Se_2_H, H_2_θdual, DθDr_Dual, DθDh
 
         function H_2_Se(H, Hkg, σ) # Kosugi WRC
@@ -32,7 +37,7 @@ module wrc
 
 
         function Se_2_H(Se, Hkg, σ) # Kosugi WRC
-             H = exp(erfcinv(2.*Se)*σ*sqrt(2.) + log(Hkg))
+             H = exp(erfcinv(2.0 * Se)*σ*sqrt(2.) + log(Hkg))
              return H
         end
 
@@ -50,9 +55,9 @@ module wrc
             rm = cst.Y / Hkg
             rm_mac = cst.Y / Hkg_mac
 
-            PDF_mac = (θs-θs_Mac) * (exp( -((log( r/rm_mac ))^2.) / (2 *σ_Mac^2.))) / (r *σ_Mac * sqrt( 2.*π ))
+            PDF_mac = (θs-θs_Mac) * (exp( -((log( r/rm_mac ))^2.) / (2 *σ_Mac^2.))) / (r *σ_Mac * sqrt( 2.0 *π ))
 
-            PDF_mat =  (θs_Mac-θr) * (exp( -(log( r/rm )^2.) / (2 * σ^2.))) / (r * σ * sqrt( 2.*π ))
+            PDF_mat =  (θs_Mac-θr) * (exp( -(log( r/rm )^2.) / (2 * σ^2.))) / (r * σ * sqrt( 2.0 *π ))
 
             PDFnorm = PDF_mac + PDF_mat
             return PDFnorm
@@ -60,15 +65,15 @@ module wrc
 
 
         function DθDh(H, θs, θr, Hkg, σ) # Kosugi
-            Dθ_Dh =(θs-θr)* exp( -((log(H/Hkg))^2. ) / (2.*σ^2.) ) / ( H*σ*sqrt(2.*π) )
+            Dθ_Dh =(θs-θr)* exp( -((log(H/Hkg))^2. ) / (2.0 *σ^2.) ) / ( H*σ*sqrt(2.0 *π) )
             return Dθ_Dh
     end
         
 #         function DθDh_R(H, θs, θr, Hkg, σ) # Kosugi
 # 	         r = cst.Y / (H + cst.ϵ)
 # 	         rm = cst.Y / Hkg
-# 	         Dθ_Dr =  (θs-θr) * exp( -((log(r/rm))^2.) / (2.*σ^2.) ) / ( r*σ*sqrt(2.*π) )
-# 	         Dθ_Dr_h =  (θs-θr) * exp( -((log(Hkg/H))^2.) / (2.*σ^2.) ) / ( (cst.Y/H)*σ*sqrt(2.*π) )
+# 	         Dθ_Dr =  (θs-θr) * exp( -((log(r/rm))^2.) / (2.0 *σ^2.) ) / ( r*σ*sqrt(2.0 *π) )
+# 	         Dθ_Dr_h =  (θs-θr) * exp( -((log(Hkg/H))^2.) / (2.0 *σ^2.) ) / ( (cst.Y/H)*σ*sqrt(2.0 *π) )
 # 	         Dθ_Dh2 = Dθ_Dr_h * cst.Y / H^2.
 #              return Dθ_Dh
 #         end
@@ -77,7 +82,7 @@ module wrc
   
     #= =============== VAN GENUCHTEN =============== =#
     module vg
-        using cst, SpecialFunctions, wrc
+        using  SpecialFunctions
         export H_2_Se, Se_2_H, H_2_θ, DθDh
 
         function H_2_Se(H, Hvg, N, Km=1.) # van Genuchten WRC
@@ -97,22 +102,22 @@ module wrc
 
         function Se_2_H(Se, Hvg, N, Km=1.) # van Genuchten WRC
             M = 1. - Km / N
-            H = Hvg * exp(log(exp(log(Se) / -M) - 1.) / N)
+            H = Hvg * exp(log(exp(log(Se) / -M) - 1.0) / N)
             return H
         end
 
 
         function DθDh(H, θs, θr, Hvg, N, Km)
             # The integration should be performed with H and not with Se  quadgk( H->  (,-Inf,0)[1]
-            M = 1.- Km/N # van Genuchten
+            M = 1.0 - Km/N # van Genuchten
 
-            DθDh = M*(θs-θr)/ (Hvg*(1-M))*(H/Hvg).^(N*M).*(1.+(H/Hvg).^N).^(-M-1.)
+            DθDh = M*(θs-θr)/ (Hvg*(1-M))*(H/Hvg).^(N*M). *(1.0 + (H/Hvg).^N).^(-M-1.0)
             return DθDh
             
             ## Alternative which does not work
             # H = Se_2_H(Se, Hvg, N, Km)
-            # DθDha = M * (θs-θr) * (Se^inv(M)) * ((1. - (Se^inv(M)) )^ M) / (Hvg* (1.-M))
-            # DθDh =(θs-θr)*M*N*(1./Hvg)*(H/Hvg).^(N-1.).*(1.+(H/Hvg).^N).^(-M-1.)
+            # DθDha = M * (θs-θr) * (Se^inv(M)) * ((1. - (Se^inv(M)) )^ M) / (Hvg* (1.0 -M))
+            # DθDh =(θs-θr)*M*N*(1./Hvg)*(H/Hvg).^(N-1.).0 *(1.+(H/Hvg).^N).^(-M-1.)
         end
 
 

@@ -1,3 +1,7 @@
+   
+ DIR_Working = pwd() # Saving the current working directory
+ push!(LOAD_PATH, DIR_Working) # All the subroutines are in the current working directory
+ include("Cst.jl")  
 
 module kunsat
 
@@ -14,7 +18,7 @@ module kunsat
     #= =============== KOSUGI =============== =#
     module kg
         export  KUNSAT, KRθini_2_σ, KUNSAT_INTEGRAL
-        using SpecialFunctions, wrc,  QuadGK
+        using SpecialFunctions,  QuadGK
 
         function KUNSAT(Se, θs, θr, σ, Ks, θs_Mac, σ_Mac)
             Ks_Mat = Ks * (θs_Mac - θr) / (θs - θr)
@@ -52,7 +56,7 @@ module kunsat
 
     #= =============== VAN GENUCHTEN =============== =#
     module vg
-    using param, Optim, SpecialFunctions
+    using Optim, SpecialFunctions
     export KUNSAT, KRθini_2_N
 
 
@@ -60,7 +64,7 @@ module kunsat
             # L = Km/2+Km-1
             M = 1 - Km/N
             # kunsat = Ks * (Se.^L) * ( 1. - (1. - Se.^(1/M) ).^M ).^(2/Km)
-            kunsat = Ks * (Se.^L) * ( 1. - (1. - Se.^(1./M) ).^M ).^2.
+            kunsat = Ks * (Se.^L) * ( 1.0 - (1.0 - Se.^(1.0/M) ).^M ).^2.0
             return kunsat
         end
 

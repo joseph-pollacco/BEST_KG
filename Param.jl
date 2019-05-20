@@ -1,5 +1,10 @@
+
+
 module param
-    using cst
+	DIR_Working = pwd() # Saving the current working directory
+	push!(LOAD_PATH, DIR_Working) # All the subroutines are in the current working directory
+	include("Cst.jl")
+
     # Kosugi params minimum and maximum
 
     i_Sample_Start = 1

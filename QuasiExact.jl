@@ -21,7 +21,7 @@ module quasiExact # quasi-exact objective function
     function INFILTTRATIONη_2_INFILTRATION3D(iT, Time_η, Inf_η, Sorpt, ΔK,  K_θini, Δθ, RingRadius)
         # Function compute infiltration-1d from normalized infiltration
         function INFILTTRATIONη_2_INFILTRATION1D(iT, Inf_η, Sorpt, ΔK,  K_θini)
-            return INFILTRATION_1D = K_θini*iT + Inf_η * (Sorpt^2.) / (2.*ΔK)
+            return INFILTRATION_1D = K_θini*iT + Inf_η * (Sorpt^2.) / (2.0 *ΔK)
         end
         ΔI_η = Time_η * cst.γ
        Inf_3D_Obs = INFILTTRATIONη_2_INFILTRATION1D(iT, Inf_η, Sorpt, ΔK, K_θini) + ΔI_η * (Sorpt^4.) / (2. *RingRadius*Δθ*(ΔK^2.))
@@ -32,7 +32,7 @@ module quasiExact # quasi-exact objective function
 
     # TRANSFORMS INFILTRATION-3D TO NORMALIZED INFILTRATION
     function INFILTRATION3D_2_INFILTTRATIONη(iT,Inf_3D_Obs, Sorpt, ΔK, K_θini, Δθ, RingRadius)
-          Inf_η = max((2.*ΔK / Sorpt^2.) * (Inf_3D_Obs  - K_θini*iT -  cst.γ * TIME_2_TIMEη(iT, Sorpt, ΔK) * (Sorpt^4.) /  (RingRadius * Δθ * 2. * (ΔK^2.)) ), cst.ϵ)
+          Inf_η = max((2.0 *ΔK / Sorpt^2.) * (Inf_3D_Obs  - K_θini*iT -  cst.γ * TIME_2_TIMEη(iT, Sorpt, ΔK) * (Sorpt^4.) /  (RingRadius * Δθ * 2. * (ΔK^2.)) ), cst.ϵ)
          return Inf_η
     end
 
@@ -41,10 +41,10 @@ module quasiExact # quasi-exact objective function
     # NORMALISED QUASI-EXACT 3D CUMULATIVE INFILTRATION EQUATION
     function OF_QUASIEXACTη(Time_η, Inf_η)
 		Left_Term = Time_η
-		Right_Term =  (1./(1.-cst.β)) * (Inf_η - log((exp(cst.β*Inf_η) + cst.β-1.) / cst.β))
+		Right_Term =  (1./(1.0 -cst.β)) * (Inf_η - log((exp(cst.β*Inf_η) + cst.β-1.) / cst.β))
 		if  Right_Term  < 0.
-            # OF = 100000.*(abs(exp(cst.β*Inf_η) + cst.β-1.))
-            OF = 10000.* exp(Inf_η)
+            # OF = 100000.0 *(abs(exp(cst.β*Inf_η) + cst.β-1.))
+            OF = 10000.0 * exp(Inf_η)
 		else
             OF =  abs(Left_Term - Right_Term)
         end
@@ -66,7 +66,7 @@ module quasiExact # quasi-exact objective function
             Inf_η = quasiExact.INFILTRATION3D_2_INFILTTRATIONη(Time[iT], Inf_3D_Obs[iT], Sorpt, ΔK, K_θini, Δθ, RingRadius)
 
             Left_Term[iT] = Time_η
-            Right_Term[iT] =  (1./(1.-cst.β)) * (Inf_η - log((exp(cst.β*Inf_η) + cst.β-1.) / cst.β))
+            Right_Term[iT] =  (1./(1.0 -cst.β)) * (Inf_η - log((exp(cst.β*Inf_η) + cst.β-1.) / cst.β))
             
             if Right_Term[iT] > 0.
                 if iT <= iT_TransStead
@@ -79,7 +79,7 @@ module quasiExact # quasi-exact objective function
                 Right_Term[iT] = 0.
             end
         end
-        Of = W * Of_Trans / Float64(iT_TransStead-1)  + (1.-W) * Of_Stead / Float64(iT_N - iT_TransStead + 1) + Of_Penalty
+        Of = W * Of_Trans / Float64(iT_TransStead-1)  + (1.0 -W) * Of_Stead / Float64(iT_N - iT_TransStead + 1) + Of_Penalty
 
         return Of
     end

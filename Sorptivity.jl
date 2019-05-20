@@ -17,7 +17,7 @@ module sorptivity
             Se_End = wrc.se.θ_2_Se(θ_End, θs, θr)
          
             function SORPTIVITY_FUNC(Se, θ_End, θ_Start, θs, θr, Hkg, σ, Ks)
-                Sorptivity_Func = (θ_End + wrc.se.Se_2_θ(Se, θs, θr) - 2.* θ_Start) * diffusivity.kg.DIFFUSIVITY(wrc.se.Se_2_θ(Se, θs, θr), θs, θr, Hkg, σ, Ks)
+                Sorptivity_Func = (θ_End + wrc.se.Se_2_θ(Se, θs, θr) - 2.0 * θ_Start) * diffusivity.kg.DIFFUSIVITY(wrc.se.Se_2_θ(Se, θs, θr), θs, θr, Hkg, σ, Ks)
                 return Sorptivity_Func
             end
 
@@ -49,18 +49,18 @@ module sorptivity
             end
 
             function SE_2_SEtran(Se)
-                Se_Tran = -log10(1.-Se)
+                Se_Tran = -log10(1.0 -Se)
                 return Se_Tran
             end
 
          
             function SORPTIVITY_FUNC(Se, θ_End, θ_Start, θs, θr, Hkg, σ, Ks)
-                Sorptivity_Func1 = (θ_End + wrc.se.Se_2_θ(Se, θs, θr) - 2.* θ_Start) * diffusivity.kg.DIFFUSIVITY(wrc.se.Se_2_θ(Se, θs, θr), θs, θr, Hkg, σ, Ks)
+                Sorptivity_Func1 = (θ_End + wrc.se.Se_2_θ(Se, θs, θr) - 2.0 * θ_Start) * diffusivity.kg.DIFFUSIVITY(wrc.se.Se_2_θ(Se, θs, θr), θs, θr, Hkg, σ, Ks)
                 return Sorptivity_Func1
             end
 
             function SORPTIVITY_FUNC_2(Se_Tran, θ_End, θ_Start, θs, θr, Hkg, σ, Ks)
-                Sorptivity_Func2 =  (Se_Tran * 10.^(-Se_Tran-1.))  * (θ_End + wrc.se.Se_2_θ(SEtran_2_Se(Se_Tran), θs, θr) - 2.* θ_Start) * diffusivity.kg.DIFFUSIVITY(wrc.se.Se_2_θ(SEtran_2_Se(Se_Tran), θs, θr), θs, θr, Hkg, σ, Ks)
+                Sorptivity_Func2 =  (Se_Tran * 10.^(-Se_Tran-1.))  * (θ_End + wrc.se.Se_2_θ(SEtran_2_Se(Se_Tran), θs, θr) - 2.0 * θ_Start) * diffusivity.kg.DIFFUSIVITY(wrc.se.Se_2_θ(SEtran_2_Se(Se_Tran), θs, θr), θs, θr, Hkg, σ, Ks)
                 return Sorptivity_Func2
             end
 
@@ -82,7 +82,7 @@ module sorptivity
 
 
             function SORPTIVITY_FUNC(Se, θ_Ini, θs, θr, Hkg, σ, Ks)
-                Sorptivity_Func = (θs + wrc.se.Se_2_θ(Se, θ_End,  θ_Start) - 2.* θ_Ini) * diffusivity.kg.DIFFUSIVITY(wrc.se.Se_2_θ(Se, θ_End, θ_Start) , θs, θr, Hkg, σ, Ks) * ( θ_End -   θ_Start)
+                Sorptivity_Func = (θs + wrc.se.Se_2_θ(Se, θ_End,  θ_Start) - 2.0 * θ_Ini) * diffusivity.kg.DIFFUSIVITY(wrc.se.Se_2_θ(Se, θ_End, θ_Start) , θs, θr, Hkg, σ, Ks) * ( θ_End -   θ_Start)
                 return Sorptivity_Func
             end
             # try
@@ -196,7 +196,7 @@ module sorptivity
          
 
             function SORPTIVITY_FUNC(θ, θ_Start, θ_End, θs, θr, Hvg, N, Ks, Km)
-                Sorptivity = (θ_End + θ - 2.* θ_Start) * diffusivity.vg.DIFFUSIVITY(θ, θs, θr, Hvg, N, Ks, Km)
+                Sorptivity = (θ_End + θ - 2.0 * θ_Start) * diffusivity.vg.DIFFUSIVITY(θ, θs, θr, Hvg, N, Ks, Km)
                 return Sorptivity
             end
 
@@ -209,7 +209,7 @@ module sorptivity
             θ_Start = θ_Start + 10.^-15.
             
             Se_Max = wrc.vg.H_2_Se(param.H_Min_Vg, Hvg, N, Km)
-            # SorptSeMax = min(max(1.-10.^(-5.3223273667*N + 5.4377861098),0.75),0.999999999)
+            # SorptSeMax = min(max(1.0 -10.^(-5.3223273667*N + 5.4377861098),0.75),0.999999999)
             
             # θ_End = wrc.se.Se_2_θ(Se_Max, θs, θr)
             # θ_End = min(θ_End, θs-10.^-10.)
@@ -217,7 +217,7 @@ module sorptivity
             θ_End = min( wrc.se.Se_2_θ(Se_Max, θs, θr), θs-10.^-10., θ_End)
         
             function SORPTIVITY_FUNC(θ, θ_Ini, θs, θr, Hvg, N, Ks, Km)
-                Sorptivity = (θs + θ - 2.* θ_Ini) * diffusivity.vg.DIFFUSIVITY(θ, θs, θr, Hvg, N, Ks, Km)
+                Sorptivity = (θs + θ - 2.0 * θ_Ini) * diffusivity.vg.DIFFUSIVITY(θ, θs, θr, Hvg, N, Ks, Km)
                 return Sorptivity
             end
 

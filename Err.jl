@@ -20,7 +20,7 @@ module err
 
                   LeftTerm = (kunsat.kg.KUNSAT(Se_1, θs, θr, σ, Ks, θs, σ) - kunsat.kg.KUNSAT(Se_Ini, θs, θr, σ, Ks, θs, σ)) / (Ks - kunsat.kg.KUNSAT(Se_Ini, θs, θr, σ, Ks, θs, σ))
 
-                  Err = abs(((θ_1 - θ_Ini) / (θs - θ_Ini)) * (1. - 2.*cst.β * (θs - θ_Ini) * Integral / Sorpt^2.) - LeftTerm)
+                  Err = abs(((θ_1 - θ_Ini) / (θs - θ_Ini)) * (1. - 2.0 *cst.β * (θs - θ_Ini) * Integral / Sorpt^2.) - LeftTerm)
                   return Err
             end
 
@@ -38,7 +38,7 @@ module err
             θ_1 = wrc.se.Se_2_θ(Se_1, θs, θr)
             
             function fθ(θ_Ini, θ, θs)
-               return (2.* (θ - θ_Ini)) / (θs + θ - 2.*θ_Ini)
+               return (2.0 * (θ - θ_Ini)) / (θs + θ - 2.0 *θ_Ini)
             end
 
             function INTEGRAL(θ, θ_Ini, θs, θr, Hkg, σ, Ks)

@@ -94,7 +94,7 @@ module convertHydroModel
         for i_Se in Se
             Kr_Kg = kunsat.kg.KUNSAT(i_Se, θs, θr, σ, Ks, θs, σ)
             Kr_Vg = kunsat.vg.KUNSAT(i_Se, N, Ks, Km)
-            OF_Kr = ((100. * (1. + Kr_Kg)) - (100.*(1. + Kr_Vg)))^2.
+            OF_Kr = ((100. * (1. + Kr_Kg)) - (100.0 *(1. + Kr_Vg)))^2.
             OF = OF_Kr + OF
         end
         return OF

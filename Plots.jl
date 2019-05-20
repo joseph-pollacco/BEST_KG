@@ -200,8 +200,8 @@ module plots
 							 for i in 1:1000
 									θ = wrc.se.Se_2_θ(Se[i], θs[iS], θr[iS])
 							 
-									H_Kg[i] = 10.* wrc.kg.Se_2_H(Se[i], Hkg[iS], σ[iS])
-									H_Vg[i] = 10.*wrc.vg.Se_2_H(Se[i], Hvg[iS], N[iS], Km[iS])
+									H_Kg[i] = 10.0 * wrc.kg.Se_2_H(Se[i], Hkg[iS], σ[iS])
+									H_Vg[i] = 10.0 *wrc.vg.Se_2_H(Se[i], Hvg[iS], N[iS], Km[iS])
 									
 									Kunsat_Kg[i] = 360. * kunsat.kg.KUNSAT(Se[i], θs[iS], θr[iS], σ[iS], Ks[iS], θs[iS], σ[iS])
 									Kunsat_Vg[i] = 360. * kunsat.vg.KUNSAT(Se[i], N[iS], Ks[iS], Km[iS])

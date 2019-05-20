@@ -37,7 +37,7 @@ export reading, option, cst, wrc, best, sorptivity, diffusivity, kunsat, param, 
 
 function START_BEST()
 	@suppress_err begin
-	 println("START running:      $(path.FileName) ...\n")
+	 println("START running:      $(path.FileName) ...0 \n")
 	 #Import packages if not yet imported
 	 if option.DownloadPackage == true
 		 PACKAGES(Option_PackageUpdate = false)
@@ -306,7 +306,7 @@ function START_BEST()
 			# Statistics on infiltration HYDRO
 			NSE_Hydro_Inf_Qe_Kg[iS] = stats.NASH_SUTCLIFFE(log10.(Inf_3D_Obs[iS,2:iT_N]), log10.(Inf_Hydro_Qe_Kg[iS, 2:iT_N]))
 
-			println( iS, " ,Sorpt_Hydro_Kg=", Sorpt_Hydro_Kg[iS]," ,σ=", σ[iS], " ,Hkg= ", Hkg[iS], " ,Ks=", 360.*Ks[iS], " ,NSE_Hydro_Inf_Best_Kg=", ",",NSE_Hydro_Inf_BestG_Kg[iS], " ,NSE_Hydro_Inf_Qe_Kg=", ",",NSE_Hydro_Inf_Qe_Kg[iS], "\n")
+			println( iS, " ,Sorpt_Hydro_Kg=", Sorpt_Hydro_Kg[iS]," ,σ=", σ[iS], " ,Hkg= ", Hkg[iS], " ,Ks=", 360.0 *Ks[iS], " ,NSE_Hydro_Inf_Best_Kg=", ",",NSE_Hydro_Inf_BestG_Kg[iS], " ,NSE_Hydro_Inf_Qe_Kg=", ",",NSE_Hydro_Inf_Qe_Kg[iS], "\n")
 
 			
 			
@@ -336,7 +336,7 @@ function START_BEST()
 
 				NSE_Hydro_Inf_Qe_Vg[iS] = stats.NASH_SUTCLIFFE(log10.(Inf_3D_Obs[iS,2:iT_N]), log10.(Inf_Hydro_Qe_Vg[iS,2:iT_N]))
 
-				println( iS, " ,Sorpt_Hydro_Vg=", Sorpt_Hydro_Vg[iS], "  N=", N[iS]," ,Hvg= ", Hvg[iS], " ,Ks=", 360.*Ks[iS], " ,NSE_Hydro_Inf_Best_Vg=", ",", NSE_Hydro_Inf_BestG_Vg[iS]," ,NSE_Hydro_Qe_Vg=", NSE_Hydro_Inf_Qe_Vg[iS], "\n")
+				println( iS, " ,Sorpt_Hydro_Vg=", Sorpt_Hydro_Vg[iS], "  N=", N[iS]," ,Hvg= ", Hvg[iS], " ,Ks=", 360.0 *Ks[iS], " ,NSE_Hydro_Inf_Best_Vg=", ",", NSE_Hydro_Inf_BestG_Vg[iS]," ,NSE_Hydro_Qe_Vg=", NSE_Hydro_Inf_Qe_Vg[iS], "\n")
 			end
 		end
 
@@ -363,9 +363,9 @@ function START_BEST()
 
 			Err_Ks_BestGi_Kg[iS] = stats.RELATIVEerr((Ks[iS]), (Ks_BestGi_Kg[iS]))
 
-			println( iS, " ,Sorpt_BestGi_Kg=", Sorpt_BestGi_Kg[iS], " ,σ_BestGi=", σ_BestGi[iS], " ,Hkg_BestG_Kg= ", Hkg_BestGi[iS], " ,Ks_BestGi_Kg=", 360.*Ks_BestGi_Kg[iS], " ,NSE_Inf_BestGi_Kg=", NSE_Inf_BestGi_Kg[iS], "\n ")
+			println( iS, " ,Sorpt_BestGi_Kg=", Sorpt_BestGi_Kg[iS], " ,σ_BestGi=", σ_BestGi[iS], " ,Hkg_BestG_Kg= ", Hkg_BestGi[iS], " ,Ks_BestGi_Kg=", 360.0 *Ks_BestGi_Kg[iS], " ,NSE_Inf_BestGi_Kg=", NSE_Inf_BestGi_Kg[iS], "\n ")
 
-			println("BEST_G_Kg..........................................................\n")
+			println("BEST_G_Kg..........................................................0 \n")
 			Sorpt_BestG_Kg[iS], Hkg_BestG[iS], σ_BestG[iS], Ks_BestG_Kg[iS], Kr_θini_BestG_Kg[iS], Inf_BestG_Kg[iS,1:iT_N] = best.kg.BESTG_INVERSE(Time[iS,1:iT_N], iT_N, Inf_3D_Obs[iS,1:iT_N], θ_Ini[iS], Se_Ini[iS], θs[iS], RingRadius[iS], iT_TransStead_Sim[iS], Time_TransStead_Sim[iS],Option_Opt_σ=true, Flag_Best="Best_G")
 
 			σ_BestG[iS], Hkg_BestG[iS] = best.kg.BESTG_INVERSE_σmodel(Sorpt_BestG_Kg[iS], Ks_BestG_Kg[iS], Time[iS,1:iT_N], iT_N, Inf_3D_Obs[iS,1:iT_N], θ_Ini[iS], Se_Ini[iS], θs[iS], RingRadius[iS], iT_TransStead_Sim[iS], Time_TransStead_Sim[iS]; Flag_Best="Best_G")
@@ -385,7 +385,7 @@ function START_BEST()
 
 			
 
-			println("BEST_Gi_Vg..........................................................\n")
+			println("BEST_Gi_Vg..........................................................0 \n")
 
 			Sorpt_BestGi_Vg[iS], Hvg_BestGi[iS], N_BestGi[iS], Ks_BestGi_Vg[iS], Kr_θini_BestGi_Vg[iS], Inf_BestGi_Vg[iS, 1:iT_N] = best.vg.BESTG_INVERSE(Time[iS,1:iT_N], iT_N, Inf_3D_Obs[iS, 1:iT_N], θ_Ini[iS], Se_Ini[iS], θs[iS], Km[iS], RingRadius[iS], iT_TransStead_Sim[iS], Time_TransStead_Sim[iS]; Option_Opt_N=true, Flag_Best="Best_Gi")
 
@@ -397,10 +397,10 @@ function START_BEST()
 
 			Err_Ks_BestGi_Vg[iS] = stats.RELATIVEerr((Ks[iS]), (Ks_BestGi_Vg[iS]))
 
-			println( iS, " ,Sorpt_BestGi_Vg=", Sorpt_BestGi_Vg[iS], " ,N_Best=",N_BestGi[iS], " ,Hvg_Best= ", Hvg_BestGi[iS], " ,Ks_Best_Vg=", 360.*Ks_BestGi_Vg[iS], " ,NSE_Inf_Best_Vg=",  NSE_Inf_BestGi_Vg[iS], "\n ")
+			println( iS, " ,Sorpt_BestGi_Vg=", Sorpt_BestGi_Vg[iS], " ,N_Best=",N_BestGi[iS], " ,Hvg_Best= ", Hvg_BestGi[iS], " ,Ks_Best_Vg=", 360.0 *Ks_BestGi_Vg[iS], " ,NSE_Inf_Best_Vg=",  NSE_Inf_BestGi_Vg[iS], "\n ")
 
 
-			println("BEST_G_Vg..........................................................\n")
+			println("BEST_G_Vg..........................................................0 \n")
 			Sorpt_BestG_Vg[iS], Hvg_BestG[iS], N_BestG[iS], Ks_BestG_Vg[iS], Kr_θini_BestG_Vg[iS], Inf_BestG_Vg[iS, 1:iT_N] = best.vg.BESTG_INVERSE(Time[iS,1:iT_N], iT_N, Inf_3D_Obs[iS, 1:iT_N], θ_Ini[iS], Se_Ini[iS], θs[iS], Km[iS], RingRadius[iS], iT_TransStead_Sim[iS], Time_TransStead_Sim[iS]; Option_Opt_N=true, Flag_Best="Best_G")
 
 			NSE_Inf_BestG_Vg[iS] = stats.NASH_SUTCLIFFE(log10.(Inf_3D_Obs[iS,2:iT_N]), log10.(Inf_BestG_Vg[iS,2:iT_N]) )
@@ -412,7 +412,7 @@ function START_BEST()
 
 	 #= =============== QUASI EXACT SOLUTION =============== =#
 		if option.output.QuasiExact == true
-		println("QUASI_EXACT KG..........................................................\n")
+		println("QUASI_EXACT KG..........................................................0 \n")
 		
 		Ks_Qe_Kg[iS], Kr_θini_Qe_Kg[iS], Sorpt_Qe_Kg[iS], σ_Qe[iS], Hkg_Qe[iS] = quasiExact.kg.INFILTRATION3D_2_HYDRO(Time[iS,1:iT_N], Inf_3D_Obs[iS,1:iT_N], iT_N, θs[iS], θ_Ini[iS], RingRadius[iS], iT_TransStead_Sim[iS], Time_TransStead_Sim[iS], true)	
 		
@@ -428,7 +428,7 @@ function START_BEST()
 
 			Err_Ks_Qe_Kg[iS] = stats.RELATIVEerr((Ks[iS]), (Ks_Qe_Kg[iS]))
 
-			println("Sorpt_Qe_Kg=", Sorpt_Qe_Kg[iS]," ,σ_Qe=", σ_Qe[iS], " ,Hkg_Qe=", Hkg_Qe[iS], " ,Ks=",360.*Ks_Qe_Kg[iS]," ,NSE_Inf_Qe_Kg=", NSE_Inf_Qe_Kg[iS], "\n")
+			println("Sorpt_Qe_Kg=", Sorpt_Qe_Kg[iS]," ,σ_Qe=", σ_Qe[iS], " ,Hkg_Qe=", Hkg_Qe[iS], " ,Ks=",360.0 *Ks_Qe_Kg[iS]," ,NSE_Inf_Qe_Kg=", NSE_Inf_Qe_Kg[iS], "\n")
 
 			θ_Time_Qe_Kg = Array{Float64}(iT_N)
 			θ_Time_Qe_Kg[1:iT_N], ~ = thetaTime.kg.θTIME(Time[1:iT_N], Inf_3D_Obs[1:iT_N], RingRadius[iS], Sorpt_Qe_Kg[iS], θ_Ini[iS], θs[iS], θr[iS],  σ_Qe[iS], Ks_Qe_Kg[iS], iT_TransStead_Small[iS], iT_N)
@@ -439,7 +439,7 @@ function START_BEST()
 			if Option_Vg
 
 			# Compute Ks ====
-			println("QUASI_EXACT VG..........................................................\n")
+			println("QUASI_EXACT VG..........................................................0 \n")
 			Ks_Qe_Vg[iS], Kr_θini_Qe_Vg[iS], Sorpt_Qe_Vg[iS], N_Qe[iS], Hvg_Qe[iS] =quasiExact.vg.INFILTRATION3D_2_HYDRO(Time[iS, 1:iT_N], Inf_3D_Obs[iS,1:iT_N], iT_N, θs[iS], θ_Ini[iS], RingRadius[iS], Km[iS], iT_TransStead_Sim[iS], Time_TransStead_Sim[iS], true)
 
 			Inf_Qe_Vg[iS, 1:iT_N] = quasiExact.HYDRO_2_INFILTRATION3D(Time[iS,1:iT_N], Sorpt_Qe_Vg[iS], Ks_Qe_Vg[iS], Ks_Qe_Vg[iS]*Kr_θini_Qe_Vg[iS], θs[iS], θ_Ini[iS], iT_N, RingRadius[iS], iT_TransStead_Sim[iS])
@@ -450,7 +450,7 @@ function START_BEST()
 
 			Err_Ks_Qe_Vg[iS] = stats.RELATIVEerr((Ks[iS]), (Ks_Qe_Vg[iS]))
 
-			println("Sorpt_Qe_Vg=", Sorpt_Qe_Vg[iS]," ,N_Qe=", N_Qe[iS], " ,Hvg_Qe=", Hvg_Qe[iS], " ,Ks=",360.*Ks_Qe_Vg[iS], "\n")
+			println("Sorpt_Qe_Vg=", Sorpt_Qe_Vg[iS]," ,N_Qe=", N_Qe[iS], " ,Hvg_Qe=", Hvg_Qe[iS], " ,Ks=",360.0 *Ks_Qe_Vg[iS], "\n")
 		end
 	end
 
@@ -530,28 +530,28 @@ function START_BEST()
 			θ = wrc.se.Se_2_θ(Se[i], θs[iS], θr[iS])
 
 			# VG H
-			H_BestG_Vg[i] = 10.*wrc.vg.Se_2_H(Se[i], Hvg_BestG[iS], N_BestG[iS], Km[iS]) #cm
-			H_BestGi_Vg[i] = 10.*wrc.vg.Se_2_H(Se[i], Hvg_BestGi[iS], N_BestGi[iS], Km[iS]) #cm
-			H_Qe_Vg[i] = 10.*wrc.vg.Se_2_H(Se[i], Hvg_Qe[iS], N_Qe[iS], Km[iS])
-			H_Vg[i] = 10.*wrc.vg.Se_2_H(Se[i], Hvg[iS], N[iS], Km[iS])
+			H_BestG_Vg[i] = 10.0 *wrc.vg.Se_2_H(Se[i], Hvg_BestG[iS], N_BestG[iS], Km[iS]) #cm
+			H_BestGi_Vg[i] = 10.0 *wrc.vg.Se_2_H(Se[i], Hvg_BestGi[iS], N_BestGi[iS], Km[iS]) #cm
+			H_Qe_Vg[i] = 10.0 *wrc.vg.Se_2_H(Se[i], Hvg_Qe[iS], N_Qe[iS], Km[iS])
+			H_Vg[i] = 10.0 *wrc.vg.Se_2_H(Se[i], Hvg[iS], N[iS], Km[iS])
 
 			#KG H
-			H_BestG_Kg[i] = 10.* wrc.kg.Se_2_H(Se[i], Hkg_BestG[iS], σ_BestG[iS]) #cm	
-			H_BestGi_Kg[i] = 10.* wrc.kg.Se_2_H(Se[i], Hkg_BestGi[iS], σ_BestGi[iS]) #cm
-			H_Kg[i] = 10.* wrc.kg.Se_2_H(Se[i], Hkg[iS], σ[iS]) #cm
-			H_Qe_Kg[i] =  10.* wrc.kg.Se_2_H(Se[i], Hkg_Qe[iS], σ_Qe[iS]) #cm
+			H_BestG_Kg[i] = 10.0 * wrc.kg.Se_2_H(Se[i], Hkg_BestG[iS], σ_BestG[iS]) #cm	
+			H_BestGi_Kg[i] = 10.0 * wrc.kg.Se_2_H(Se[i], Hkg_BestGi[iS], σ_BestGi[iS]) #cm
+			H_Kg[i] = 10.0 * wrc.kg.Se_2_H(Se[i], Hkg[iS], σ[iS]) #cm
+			H_Qe_Kg[i] =  10.0 * wrc.kg.Se_2_H(Se[i], Hkg_Qe[iS], σ_Qe[iS]) #cm
 
 			# VG Kunsat
-			Kunsat_BestG_Vg[i] = 360.*kunsat.vg.KUNSAT(Se[i], N_BestG[iS], Ks_BestG_Vg[iS], Km[iS])
-			Kunsat_BestGi_Vg[i] = 360.*kunsat.vg.KUNSAT(Se[i], N_BestGi[iS], Ks_BestGi_Vg[iS], Km[iS])
-			Kunsat_Qe_Vg[i] = 360.*kunsat.vg.KUNSAT(Se[i], N_Qe[iS], Ks_Qe_Vg[iS], Km[iS])
-			Kunsat_Vg[i] = 360.*kunsat.vg.KUNSAT(Se[i], N[iS], Ks[iS], Km[iS])
+			Kunsat_BestG_Vg[i] = 360.0 *kunsat.vg.KUNSAT(Se[i], N_BestG[iS], Ks_BestG_Vg[iS], Km[iS])
+			Kunsat_BestGi_Vg[i] = 360.0 *kunsat.vg.KUNSAT(Se[i], N_BestGi[iS], Ks_BestGi_Vg[iS], Km[iS])
+			Kunsat_Qe_Vg[i] = 360.0 *kunsat.vg.KUNSAT(Se[i], N_Qe[iS], Ks_Qe_Vg[iS], Km[iS])
+			Kunsat_Vg[i] = 360.0 *kunsat.vg.KUNSAT(Se[i], N[iS], Ks[iS], Km[iS])
 			
 			#KG Kunsat
-			Kunsat_BestG_Kg[i] = 360.*kunsat.kg.KUNSAT(Se[i], θs[iS], θr[iS], σ_BestG[iS], Ks_BestG_Kg[iS], θs[iS], σ_BestG[iS])
-			Kunsat_BestGi_Kg[i] = 360.*kunsat.kg.KUNSAT(Se[i], θs[iS], θr[iS], σ_BestGi[iS], Ks_BestGi_Kg[iS], θs[iS], σ_BestGi[iS])
-			Kunsat_Kg[i] = 360.*kunsat.kg.KUNSAT(Se[i], θs[iS], θr[iS], σ[iS], Ks[iS], θs[iS], σ[iS]) #cm/h
-			Kunsat_Qe_Kg[i] = 360.*kunsat.kg.KUNSAT(Se[i], θs[iS], θr[iS], σ_Qe[iS], Ks_Qe_Kg[iS], θs[iS], σ_Qe[iS])
+			Kunsat_BestG_Kg[i] = 360.0 *kunsat.kg.KUNSAT(Se[i], θs[iS], θr[iS], σ_BestG[iS], Ks_BestG_Kg[iS], θs[iS], σ_BestG[iS])
+			Kunsat_BestGi_Kg[i] = 360.0 *kunsat.kg.KUNSAT(Se[i], θs[iS], θr[iS], σ_BestGi[iS], Ks_BestGi_Kg[iS], θs[iS], σ_BestGi[iS])
+			Kunsat_Kg[i] = 360.0 *kunsat.kg.KUNSAT(Se[i], θs[iS], θr[iS], σ[iS], Ks[iS], θs[iS], σ[iS]) #cm/h
+			Kunsat_Qe_Kg[i] = 360.0 *kunsat.kg.KUNSAT(Se[i], θs[iS], θr[iS], σ_Qe[iS], Ks_Qe_Kg[iS], θs[iS], σ_Qe[iS])
 		end
 
 		# Statistics of the hydraulic parameters

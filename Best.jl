@@ -45,34 +45,34 @@ module best
 	
 
 	function B(Kr_θini)
-		B = (2.-cst.β) / 3. + Kr_θini * (1. + cst.β) / 3.
+		B = (2.0 -cst.β) / 3. + Kr_θini * (1. + cst.β) / 3.
 		return B
 	end
 
 
 
 	function C(B)
-		C = log(1./cst.β) * (1.+cst.β) / (6. * (1.-cst.β) * (1.-B) )
+		C = log(1./cst.β) * (1.+cst.β) / (6. * (1.0 -cst.β) * (1.0 -B) )
 		return C
 	end
 
 
 
 	function B_2_C(Kr_θini)
-		return C = log(1. / cst.β) / (2. * (1.-cst.β) * (1. - Kr_θini))
+		return C = log(1. / cst.β) / (2. * (1.0 -cst.β) * (1. - Kr_θini))
 	end
 
 
 
 	function B_2_Krθini(B)
-		Kr_θini = (3.*B - 2. + cst.β) / (1. + cst.β)
+		Kr_θini = (3.0 *B - 2. + cst.β) / (1. + cst.β)
 		return Kr_θini
 	end
 
 
 
 	function TIME_STEADYTRANSIT(Sorptivity, B, Ks)
-		Time_TransStead = ( Sorptivity / (Ks * 2. * (1.-B)) )^2.
+		Time_TransStead = ( Sorptivity / (Ks * 2. * (1.0 -B)) )^2.
 		return Time_TransStead
 	end
 	
@@ -146,7 +146,7 @@ module best
 	
 				Of_Stead =stats.NASH_SUTCLIFFE_OF(log10.(Inf_3D_Obs[iT_TransStead:iT_N]), log10.(Inf_Sim[iT_TransStead:iT_N]), P_Stead)
 
-				Wof = W * Of_Trans + (1.- W) * Of_Stead
+				Wof = W * Of_Trans + (1.0 - W) * Of_Stead
 				return Wof
 			end
 
@@ -206,7 +206,7 @@ module best
 				
 				Of_Hkg = abs(log10(Hkg_Sorpt) - log10(Hkg_σ)) / 10.
 				
-				Wof = W * Of_Trans + (1.- W) * Of_Stead + Of_Hkg 
+				Wof = W * Of_Trans + (1.0 - W) * Of_Stead + Of_Hkg 
 
 				return Wof
 			end

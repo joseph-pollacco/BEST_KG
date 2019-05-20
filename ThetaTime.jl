@@ -94,7 +94,7 @@ module thetaTime
 					 
 					Of_θs = abs(θ_Time[iT_TransStead] - θs)
 
-					Wof = 10.*((10.* Of  + Of_Penalty) / (iT_N - iT_TransStead + 1))^(1./Power)
+					Wof = 10.0 *((10.0 * Of  + Of_Penalty) / (iT_N - iT_TransStead + 1))^(1./Power)
      
                 return Of_θs, Wof, θ_Time
             end            
@@ -233,7 +233,7 @@ module thetaTime
             # Searching for θ_Time = 0
             function OF_θInf(iT_TransStead, ΔInfiltration_1D, ΔTime, θ_Ini, θs, θr, N, Ks, Km, ZinfMax)
                 θ_Time, Of_Penalty = θ_INF(iT_TransStead, ΔInfiltration_1D, ΔTime, θ_Ini, θs, θr, N, Ks, Km, ZinfMax)
-                OF = 1000*abs(θ_Time[iT_TransStead] - θs) + 1000*Of_Penalty + 10.* (1. / N)
+                OF = 1000*abs(θ_Time[iT_TransStead] - θs) + 1000*Of_Penalty + 10.0 * (1. / N)
                 return OF
             end
             
@@ -326,7 +326,7 @@ module thetaTime
 				end
 				end
 
-			Of = 10.*((Of  + 10.*Of_Penalty) / (iT_N - iT_TransStead + 1))^(1./ 1.)
+			Of = 10.0 *((Of  + 10.0 *Of_Penalty) / (iT_N - iT_TransStead + 1))^(1./ 1.)
 
 				return Of, θ_Time
 			end            
